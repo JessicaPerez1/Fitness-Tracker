@@ -2,31 +2,32 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const logger = require("morgan");
+const app = express();
 
 const PORT = process.env.PORT || 3000;
 
 //require model
-const Workout = require("./workout.js");
-
-const app = express();
-
-app.use(logger("dev"));
 
 //MIDDLEWARE
+app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-//mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/custommethods", { useNewUrlParser: true });
-// const db = mongojs(databaseUrl, collections);
-
-db.on("error", (error) => {
-  console.log("Database Error:", error);
+//this is where we connect to our database
+//include env variable for Heroku connection to database
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
+  useNewUrlParser: true,
 });
+//const db = mongojs(databaseUrl, collections);
 
-app.get("/", (req, res) => {
-  res.send(index.html);
-});
+//require our routes
+//app.use(require("./routes/api-routes.js"));
+//app.use(require("./routes/html-routes.js"));
+
+require("./routes/html-routes.js")(app);
+require("./routes/api-routes.js")(app);
+
 //make sure port is working
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
