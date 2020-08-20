@@ -44,7 +44,11 @@ const WorkoutSchema = new Schema(
         },
       },
     ],
+    totalWeight: Number,
+
+    totalDuration: Number,
   }
+
   // {
   //   toJSON: {
   //     // we include virtuals because the mongoose doesn't inlcude virtual properties,
@@ -53,18 +57,6 @@ const WorkoutSchema = new Schema(
   //   },
   //}
 );
-// // adds a virtual(calculated property) field to the schema
-// workoutSchema.virtual("totalWeight").get(function () {
-//   // adding the total weight of the exercises together
-//   return this.weight * this.reps * this.sets;
-// });
-// // adds a virtual( calculated property) field to schema
-// workoutSchema.virtual("totalDuration").get(function () {
-//   // the reduce method executes a reducer function(that you provide) on each element of the array, resulting in single output value.
-//   return this.exercises.reduce((total, exercise) => {
-//     return total + exercise.duration;
-//   }, 0);
-// });
 
 //create the model
 const Workout = mongoose.model("Workout", WorkoutSchema);

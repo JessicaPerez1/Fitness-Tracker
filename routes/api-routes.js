@@ -16,6 +16,9 @@ const Workout = require("../models/workout.js");
 module.exports = function (app) {
   //CREATE A NEW WORKOUT
   app.post("/api/workouts", ({ body }, res) => {
+    const workout = new Workout(body);
+    // workout.setTotalWeight();
+    // workout.setTotalDuration();
     //const workout = new Workout(body);
     Workout.create(body)
       .then((dbWorkout) => {
@@ -46,6 +49,17 @@ module.exports = function (app) {
     Workout.find({})
       .then((dbWorkout) => {
         console.log(dbWorkout);
+        res.json(dbWorkout);
+      })
+      .catch((err) => {
+        res.json(err);
+      });
+  });
+
+  //STATS ROUTE
+  app.get("/api/workouts/range", (req, res) => {
+    Workout.find({})
+      .then((dbWorkout) => {
         res.json(dbWorkout);
       })
       .catch((err) => {
