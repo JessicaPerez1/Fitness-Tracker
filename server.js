@@ -1,12 +1,11 @@
-//
+//DEPENDENCIES
 const express = require("express");
 const mongoose = require("mongoose");
 const logger = require("morgan");
 const app = express();
 
+//SET UP OUR PORT
 const PORT = process.env.PORT || 3000;
-
-//require model
 
 //MIDDLEWARE
 app.use(logger("dev"));
@@ -19,12 +18,8 @@ app.use(express.static("public"));
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
   useNewUrlParser: true,
 });
-//const db = mongojs(databaseUrl, collections);
 
 //require our routes
-//app.use(require("./routes/api-routes.js"));
-//app.use(require("./routes/html-routes.js"));
-
 require("./routes/html-routes.js")(app);
 require("./routes/api-routes.js")(app);
 

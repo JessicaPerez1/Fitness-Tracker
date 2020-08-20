@@ -1,50 +1,41 @@
 //connect to my database
 const db = require("../models");
 const Workout = require("../models/workout.js");
-//const Workout = db.Workout
-//const router = require("express").Router();
-//API ROUTES NEEDED
-//CREATE A NEW WORKOUT==== POST/insert()
-//be able to add new exercises to a new workout plan
-//CONTINUE/VIEW LAST WORKOUT =====GET/find()
-//sort by descending date, and select the first item(at index 0 of array)
-//be able to add exercise to a previous workout plan ==== POST/insert to add, GET/find() to retrieve
 
-//patch????? to update
-
-//GET ALL THE WORKOUTS
 module.exports = function (app) {
   //CREATE A NEW WORKOUT
   app.post("/api/workouts", ({ body }, res) => {
     const workout = new Workout(body);
-    // workout.setTotalWeight();
-    // workout.setTotalDuration();
-    //const workout = new Workout(body);
+    //create a new workout with our constructor
     Workout.create(body)
       .then((dbWorkout) => {
-        // If saved successfully, send the the new User document to the client
+        // If saved successfully, send the the new workout to the user
         res.json(dbWorkout);
       })
       .catch((err) => {
-        // If an error occurs, send the error to the client
+        // If an error occurs, send the error
         res.json(err);
       });
   });
-  //update a workout
+  // UPDATE A WORKOUT
   app.put("/api/workouts/:id", (req, res) => {
+    //find the workout by its id
     Workout.findByIdAndUpdate(req.params.id, {
+      //push the updated body information to the exercise array
       $push: {
         exercises: req.body,
       },
     })
+      //send the new info
       .then((dbWorkout) => {
         res.json(dbWorkout);
       })
+      //if there is an error, send it
       .catch((err) => {
         res.json(err);
       });
   });
-
+  //GET ALL THE WORKOUTS from our DATABASE
   app.get("/api/workouts", (req, res) => {
     Workout.find({})
       .then((dbWorkout) => {
@@ -58,7 +49,9 @@ module.exports = function (app) {
 
   //STATS ROUTE
   app.get("/api/workouts/range", (req, res) => {
+    //get all the workout info
     Workout.find({})
+      //send the info back
       .then((dbWorkout) => {
         res.json(dbWorkout);
       })
@@ -67,17 +60,3 @@ module.exports = function (app) {
       });
   });
 };
-
-//FOR UPDATE==need to populate the exrcise array
-// app.post("/submit", ({ body }, res) => {
-//   db.Workout.create(body)
-//     .then(({ _id }) =>
-//       db.Workout.findOneAndUpdate({}, { $push: { notes: _id } }, { new: true })
-//     )
-//     .then((dbUser) => {
-//       res.json(dbUser);
-//     })
-//     .catch((err) => {
-//       res.json(err);
-//     });
-// });
