@@ -30,11 +30,12 @@ Create a workout tracker that will allow the user to view, create and track dail
 
 ### App-screenshots
 
-![Workout Tracker screenshot]()
+![Workout Tracker screenshot](assets/dashboard.png)
+![Workout Stats screenshot](assets/stats.png)
 
 ### Questions
 
 For any questions about this app or if you'd like to contribute, please refer to my Github page or contact me by email!
 
-- [JessicaPerez1 Github link:]()
+- [JessicaPerez1 Github link:](https://github.com/JessicaPerez1)
 - 1jessicaperez@gmail.com
